@@ -11,12 +11,12 @@ const navigation = document.querySelector("nav");
 
 if (menuButton && navigation) {
     menuButton.addEventListener("click", () => {
-        navigation.classList.toggle("active");
+        navigation.classList.toggle("open");
     });
 
     navigation.querySelectorAll("a").forEach(link => {
         link.addEventListener("click", () => {
-            navigation.classList.remove("active");
+            navigation.classList.remove("open");
         });
     });
 }
@@ -27,7 +27,7 @@ if (menuButton && navigation) {
 const filterButtons = document.querySelectorAll(".filters button");
 const projectCards = document.querySelectorAll(".project-card");
 
-// Categories match the 17 projects in index.html
+// Categories match the 18 projects in index.html
 const projectCategories = [
     "Product Advertising", // 01
     "Social Media",        // 02
@@ -45,7 +45,8 @@ const projectCategories = [
     "Social Media",        // 14
     "Brand Identity",      // 15
     "Other",               // 16
-    "Social Media"         // 17
+    "Social Media",        // 17
+    "UI/UX Designs"        // 18
 ];
 
 filterButtons.forEach(button => {
@@ -197,8 +198,10 @@ const contactForm = document.getElementById("contactForm");
 
 function getContactDetails() {
 
-    if (!contactForm.checkValidity()) {
-        contactForm.reportValidity();
+    if (!contactForm || !contactForm.checkValidity()) {
+        if (contactForm) {
+            contactForm.reportValidity();
+        }
         return null;
     }
 
@@ -219,57 +222,64 @@ function getContactDetails() {
 
 const sendEmailButton = document.getElementById("sendEmail");
 
-sendEmailButton.addEventListener("click", async () => {
-    const form = document.getElementById("contactForm");
+if (sendEmailButton) {
 
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
+    sendEmailButton.addEventListener("click", async () => {
 
-    const name = document.getElementById("clientName").value.trim();
-    const email = document.getElementById("clientEmail").value.trim();
-    const message = document.getElementById("clientMessage").value.trim();
+        const form = document.getElementById("contactForm");
 
-    sendEmailButton.disabled = true;
-    sendEmailButton.textContent = "Sending...";
-
-    try {
-        const response = await fetch(
-            "https://formsubmit.co/ajax/zee662070@gmail.com",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    message: message,
-                    _subject: "New Message From Zaina Portfolio"
-                })
+        if (!form || !form.checkValidity()) {
+            if (form) {
+                form.reportValidity();
             }
-        );
-
-        const result = await response.json();
-
-        if (String(result.success) !== "true") {
-            throw new Error(result.message || "Email submission failed");
+            return;
         }
 
-        alert("Message submitted successfully!");
-        form.reset();
+        const name = document.getElementById("clientName").value.trim();
+        const email = document.getElementById("clientEmail").value.trim();
+        const message = document.getElementById("clientMessage").value.trim();
 
-    } catch (error) {
-        alert("Message send nahi hua: " + error.message);
-        console.error(error);
+        sendEmailButton.disabled = true;
+        sendEmailButton.textContent = "Sending...";
 
-    } finally {
-        sendEmailButton.disabled = false;
-        sendEmailButton.textContent = "Send via Email ↗";
-    }
-});
+        try {
+            const response = await fetch(
+                "https://formsubmit.co/ajax/zee662070@gmail.com",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        message: message,
+                        _subject: "New Message From Zaina Portfolio"
+                    })
+                }
+            );
+
+            const result = await response.json();
+
+            if (String(result.success) !== "true") {
+                throw new Error(result.message || "Email submission failed");
+            }
+
+            alert("Message submitted successfully!");
+            form.reset();
+
+        } catch (error) {
+            alert("Message send nahi hua: " + error.message);
+            console.error(error);
+
+        } finally {
+            sendEmailButton.disabled = false;
+            sendEmailButton.textContent = "Send via Email ↗";
+        }
+    });
+
+}
 
 
 // 6. SEND MESSAGE VIA WHATSAPP
