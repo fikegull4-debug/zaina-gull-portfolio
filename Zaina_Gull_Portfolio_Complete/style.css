@@ -999,3 +999,52 @@ footer small {
         font-size: 8px;
     }
 }
+/* PORTFOLIO CATEGORY HEADINGS */
+
+.portfolio-category-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: 0;
+    margin: 55px 0 25px;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    display: block;
+}
+
+.portfolio-category-title::before,
+.portfolio-category-title::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ROUNDED IMAGE FRAME */
+
+.portrait {
+    width: 300px;
+    height: 370px;
+    padding: 10px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 35px;
+    overflow: hidden;
+    box-shadow: 
+}
+
+/* MOBILE CATEGORY HEADINGS */
+
+@media (max-width: 768px) {
+    .portfolio-category-title {
+        font-size: 27px;
+        margin: 45px 0 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-category-title {
+        font-size: 23px;
+    }
+}
